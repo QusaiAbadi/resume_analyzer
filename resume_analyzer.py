@@ -1,9 +1,13 @@
 import streamlit as st
 import fitz  # PyMuPDF
-import spacy.cli
-spacy.cli.download("en_core_web_sm")
 import spacy
-nlp = spacy.load("en_core_web_sm")
+try:
+    nlp = spacy.load("en_core_web_sm")
+except OSError:
+    import subprocess
+    import sys
+    subprocess.run([sys.executable, "-m", "pip", "install", "en-core-web-sm", "--user"])
+    nlp = spacy.load("en_core_web_sm")
 import re
 from difflib import SequenceMatcher
 
